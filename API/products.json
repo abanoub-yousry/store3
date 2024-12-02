@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "name": "Ring",
+    "price": 20,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.40_f4e08c8e.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 2,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.43_9f8ed390.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 3,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.45_f04cf7b2.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 4,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.49_6711df99.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 5,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.50_0a995141.jpg",
+    "category": "Ring"
+  },
+  {
+    "id":6,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.50_08703f2c.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 7,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.51_339d9cb0.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 8,
+    "name": "Ring",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.14.52_30a51ff4.jpg",
+    "category": "Ring"
+  },
+  {
+    "id": 9,
+    "name": "Necklace",
+    "price": 50,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.22.07_65c47354.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 10,
+    "name": "Necklace",
+    "price": 20,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.50_3b269563.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 11,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.51_fb8c629a.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id":12,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.52_0b477ebc.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 13,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.53_a43578e9.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id":14,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.58_ba8665b3.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 15,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.59_e5eb40c0.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 16,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.22.01_e7ad3c7f.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id":17,
+    "name": "Necklace",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.22.06_c4461f5a.jpg",
+    "category": "Necklace"
+  },
+  {
+    "id": 18,
+    "name": "Bracelet",
+    "price": 40,
+    "img": "API/products images/WhatsApp Image 2024-12-01 at 14.21.49_5f0dd88b.jpg",
+    "category": "Bracelet"
+  }
+]
