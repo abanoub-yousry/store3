@@ -444,7 +444,7 @@ body {
 }
 
 #product1 .pro .cart {
-  width: 40px;
+  width: 48px;
   height: 40px;
   line-height: 40px;
   border-radius: 50px;
@@ -453,7 +453,7 @@ body {
   border: 1px solid #cce7d0;
   position: absolute;
   bottom: 20px;
-  right: 10px;
+  right:5px;
 }
 
 #product1 .pro .cart:hover {
