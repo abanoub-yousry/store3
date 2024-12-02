@@ -464,9 +464,16 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 40%;  /* عرض 2 عناصر في صف على الشاشات الصغيرة */
-    min-width: 120px;
-      padding: 5px 7px;
+    width: 100%; /* عرض المنتج يصبح 100% لملء الشاشة */
+    margin: 10px 0; /* تقليل المسافات بين العناصر */
+  }
+
+  #product1 .pro-container {
+    gap: 10px; /* تقليل المسافات الأفقية بين المنتجات */
+  }
+
+  #product1 .pro img {
+    border-radius: 15px; /* جعل الصور أكثر تناسبًا مع التصميم الجديد */
   }
 }
 
