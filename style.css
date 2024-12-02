@@ -393,7 +393,7 @@ body {
 }
 
 #product1 .pro {
-  width: 23%; /* لتحديد عرض العناصر بالنسبة للصف الكامل */
+  width: 23%;  /* عرض 4 عناصر في صف على الشاشات الكبيرة */
   min-width: 150px;
   padding: 10px 12px;
   border: 1px solid #cce7d0;
@@ -464,14 +464,14 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 40%; /* عرض العناصر 2 في كل صف */
+    width: 48%;  /* عرض 2 عناصر في صف على الشاشات الصغيرة */
   }
 }
 
 /* Media query for larger screens (computers) */
 @media screen and (min-width: 769px) {
   #product1 .pro {
-    width: 23%; /* عرض العناصر 4 في كل صف */
+    width: 23%;  /* عرض 4 عناصر في صف على الشاشات الكبيرة */
   }
 }
 
