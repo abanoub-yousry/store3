@@ -463,9 +463,9 @@ body {
 
 /* Media query for smaller screens (phones) */
 /* Media query for smaller screens (phones) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1280px) {
   #product1 .pro {
-    width: calc(40%); /* عرض العنصر ليكون أكبر */
+    width: calc(48%); /* عرض العنصر ليكون أكبر */
     margin: 1%; /* تقليل المسافة بين العناصر */
   }
 }
