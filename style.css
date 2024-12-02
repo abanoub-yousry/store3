@@ -464,7 +464,7 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 48%; /* عرض المنتج يصبح 100% لملء الشاشة */
+    width: 40%; /* عرض المنتج يصبح 100% لملء الشاشة */
 /*     margin: 5px 0; /* تقليل المسافات بين العناصر */ */
   }
 
