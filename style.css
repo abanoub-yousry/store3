@@ -387,7 +387,7 @@ body {
 
 #product1 .pro-container {
   display: flex;
-  justify-content:space-evenly;
+/*   justify-content:space-evenly; */
   /* padding-top: 20px; */
   flex-wrap: wrap;
 }
@@ -464,8 +464,8 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 48%; /* عرض العناصر 2 في كل صف */
-
+    width: 40%; /* عرض العناصر 2 في كل صف */
+margin: 15px 2px;
 
   }
 }
