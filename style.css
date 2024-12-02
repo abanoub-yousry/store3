@@ -462,13 +462,7 @@ body {
 }
 
 /* Media query for smaller screens (phones) */
-@media screen and (max-width: 768px) {
-  #product1 .pro {
-    width: 40%; /* عرض العناصر 2 في كل صف */
-margin: 50px 2px;
 
-  }
-}
 
 /* Media query for larger screens (computers) */
 @media screen and (min-width: 769px) {
@@ -758,4 +752,11 @@ footer .install img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+@media screen and (max-width: 768px) {
+  #product1 .pro {
+    width: 40%; /* عرض العناصر 2 في كل صف */
+margin: 50px 2px;
+
+  }
 }
