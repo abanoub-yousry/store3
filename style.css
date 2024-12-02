@@ -464,7 +464,7 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: calc(50% - 1px); /* عرض العنصر مع مراعاة المسافة */
+    width: calc(40% - 1px); /* عرض العنصر مع مراعاة المسافة */
     margin: 0.5px; /* المسافة بين العناصر */
   }
 }
