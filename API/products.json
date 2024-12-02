@@ -57,10 +57,10 @@
   },
   {
     "id": 9,
-    "name": "Necklace",
+    "name": "Ring",
     "price": 50,
     "img": "API/products images/WhatsApp Image 2024-12-01 at 14.22.07_65c47354.jpg",
-    "category": "Necklace"
+    "category": "Ring"
   },
   {
     "id": 10,
