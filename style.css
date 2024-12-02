@@ -387,7 +387,7 @@ body {
 
 #product1 .pro-container {
   display: flex;
-  justify-content: space-between;
+/*   justify-content: space-between; */
   padding-top: 20px;
   flex-wrap: wrap;
 }
@@ -464,7 +464,7 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 40%; /* عرض العناصر 2 في كل صف */
+    width: 50%; /* عرض العناصر 2 في كل صف */
 
 
   }
