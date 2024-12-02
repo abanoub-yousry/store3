@@ -315,7 +315,17 @@ body {
   padding: 20px;
   background-color: #f6f6f6;
 }
-
+#share-button{
+  display: flex;
+  margin: 1.5rem auto 0 auto;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #065c66;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
 #slider h1 {
   margin: 10px;
   text-align: center;
