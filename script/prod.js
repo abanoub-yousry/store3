@@ -21,7 +21,7 @@ fetch(`API/products.json`)
     if (product) {
       productImg.src = product.img;
       productName.innerHTML = product.name;
-      productCategory.innerHTML = product.category;
+      // productCategory.innerHTML = product.category;
       productPrice.innerHTML = `$${product.price}`;
       productPar.innerHTML = product.description;
     } else {
