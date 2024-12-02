@@ -465,7 +465,7 @@ body {
 @media screen and (max-width: 768px) {
   #product1 .pro {
     width: 40%; /* عرض العناصر 2 في كل صف */
-margin: 15px 2px;
+margin: 50px 2px;
 
   }
 }
