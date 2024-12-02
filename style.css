@@ -755,7 +755,7 @@ footer .install img {
 }
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 40%; /* عرض العناصر 2 في كل صف */
+    width:50%; /* عرض العناصر 2 في كل صف */
 margin: 50px 2px;
 
   }
