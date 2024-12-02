@@ -465,11 +465,11 @@ body {
 @media screen and (max-width: 768px) {
   #product1 .pro {
     width: 48%; /* عرض المنتج يصبح 100% لملء الشاشة */
-    margin: 5px 0; /* تقليل المسافات بين العناصر */
+/*     margin: 5px 0; /* تقليل المسافات بين العناصر */ */
   }
 
   #product1 .pro-container {
-    gap: 5px; /* تقليل المسافات الأفقية بين المنتجات */
+    gap: 3px; /* تقليل المسافات الأفقية بين المنتجات */
   }
 
   #product1 .pro img {
