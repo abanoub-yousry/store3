@@ -753,10 +753,10 @@ footer .install img {
   flex-direction: column;
   align-items: flex-start;
 }
+/* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width:50%; /* عرض العناصر 2 في كل صف */
-margin: 50px 2px;
-
+    width: calc(48%); /* عرض العنصر ليكون أكبر */
+    margin: 1%; /* تقليل المسافة بين العناصر */
   }
 }
