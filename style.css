@@ -444,7 +444,7 @@ body {
 }
 
 #product1 .pro .cart {
-  width:20px;
+  width:100px;
   height: 40px;
   line-height: 40px;
   border-radius: 50px;
@@ -466,7 +466,7 @@ body {
   #product1 .pro {
     width: 40%;  /* عرض 2 عناصر في صف على الشاشات الصغيرة */
     min-width: 120px;
-      padding: 1px 3px;
+      padding: 5px 7px;
   }
 }
 
