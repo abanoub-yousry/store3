@@ -462,12 +462,14 @@ body {
 }
 
 /* Media query for smaller screens (phones) */
+/* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: calc(40% - 1px); /* عرض العنصر مع مراعاة المسافة */
-    margin: 0.5px; /* المسافة بين العناصر */
+    width: calc(48%); /* عرض العنصر ليكون أكبر */
+    margin: 1%; /* تقليل المسافة بين العناصر */
   }
 }
+
 /* Media query for larger screens (computers) */
 @media screen and (min-width: 769px) {
   #product1 .pro {
