@@ -393,7 +393,7 @@ body {
 }
 
 #product1 .pro {
-  width: 23%;  /* عرض 4 عناصر في صف على الشاشات الكبيرة */
+  width: 23%; /* لتحديد عرض العناصر بالنسبة للصف الكامل */
   min-width: 150px;
   padding: 10px 12px;
   border: 1px solid #cce7d0;
@@ -420,7 +420,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 10px 0;
 }
 
 #product1 .pro .des h5,
@@ -444,7 +444,7 @@ body {
 }
 
 #product1 .pro .cart {
-  width:100px;
+  width: 40px;
   height: 40px;
   line-height: 40px;
   border-radius: 50px;
@@ -453,7 +453,7 @@ body {
   border: 1px solid #cce7d0;
   position: absolute;
   bottom: 20px;
-  right:1px;
+  right: 10px;
 }
 
 #product1 .pro .cart:hover {
@@ -464,23 +464,14 @@ body {
 /* Media query for smaller screens (phones) */
 @media screen and (max-width: 768px) {
   #product1 .pro {
-    width: 40%; /* عرض المنتج يصبح 100% لملء الشاشة */
-/*     margin: 5px 0; /* تقليل المسافات بين العناصر */ */
-  }
-
-  #product1 .pro-container {
-    gap: 3px; /* تقليل المسافات الأفقية بين المنتجات */
-  }
-
-  #product1 .pro img {
-    border-radius: 15px; /* جعل الصور أكثر تناسبًا مع التصميم الجديد */
+    width: 48%; /* عرض العناصر 2 في كل صف */
   }
 }
 
 /* Media query for larger screens (computers) */
 @media screen and (min-width: 769px) {
   #product1 .pro {
-    width: 23%;  /* عرض 4 عناصر في صف على الشاشات الكبيرة */
+    width: 23%; /* عرض العناصر 4 في كل صف */
   }
 }
 
