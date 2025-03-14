@@ -2,12 +2,13 @@
 const firebaseConfig = {
     apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
     authDomain: "dora-store.firebaseapp.com",
+    databaseURL: "https://dora-store-default-rtdb.firebaseio.com", // ✅ أضف هذا السطر
     projectId: "dora-store",
     storageBucket: "dora-store.firebasestorage.app",
     messagingSenderId: "331430680486",
     appId: "1:331430680486:web:bf9c5880015fde63496167",
     measurementId: "G-YF9G38JB8V"
-  };
+};
   
 
 firebase.initializeApp(firebaseConfig);
