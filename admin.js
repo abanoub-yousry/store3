@@ -13,6 +13,13 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+firebase.database().ref(".info/connected").on("value", (snapshot) => {
+    if (snapshot.val() === true) {
+        console.log("✅ متصل بقاعدة البيانات");
+    } else {
+        console.error("❌ غير متصل بقاعدة البيانات");
+    }
+});
 
 // إضافة منتج
 const form = document.getElementById("productForm");
