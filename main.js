@@ -34,13 +34,13 @@ async function requestAndBuild(category = "all") {
 }
 
 function createProductCard(product) {
-    const { title, price, imageURL, category } = product;
+    const { name, price, imageUrl, category } = product;
 
     const productHTML = `
         <div class="pro">
-            <img src="${imageURL}" alt="${title}" onerror="this.src='placeholder-image.jpg';">
+            <img src="${imageUrl}" alt="${name}" onerror="this.src='placeholder-image.jpg';">
             <div class="description">
-                <h3>${title}</h3>
+                <h3>${name}</h3>
                 <h4>${category}</h4>
                 <h4>$${price}</h4>
             </div>
