@@ -1,5 +1,5 @@
 // إعدادات
-const IMGBB_API_KEY = 'ضع_مفتاح_ImgBB_هنا';
+const IMGBB_API_KEY = '1b6a202851bd8f1860a6f253bc75bb02';
 const FIREBASE_URL = 'https://your-firebase-url.firebaseio.com/products.json';
 
 // دالة لإضافة المنتج
