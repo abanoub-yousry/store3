@@ -24,12 +24,13 @@ form.addEventListener("submit", (e) => {
     const price = document.getElementById("productPrice").value;
     const image = document.getElementById("productImage").value;
 
-    db.ref("products").push({
-        name: name,
-        price: price,
-        image: image
-    });
-
+const type = document.getElementById("productType").value;
+db.ref("products").push({
+    name: name,
+    price: price,
+    image: image,
+    type: type  // ✅ أضف النوع
+});
     alert("تمت إضافة المنتج بنجاح!");
     form.reset();
 });
