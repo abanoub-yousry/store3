@@ -1,73 +1,91 @@
-// إعدادات
-const IMGBB_API_KEY = '1b6a202851bd8f1860a6f253bc75bb02';
-const FIREBASE_URL = 'https://your-firebase-url.firebaseio.com/products.json';
+// إعدادات Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
+  authDomain: "dora-store.firebaseapp.com",
+  databaseURL: "https://dora-store-default-rtdb.firebaseio.com",
+  projectId: "dora-store",
+  storageBucket: "dora-store.appspot.com",
+  messagingSenderId: "331430680486",
+  appId: "1:331430680486:web:bf9c5880015fde63496167",
+  measurementId: "G-YF9G38JB8V",
+};
 
-// دالة لإضافة المنتج
-async function addProduct() {
-    const productName = document.getElementById('productName').value.trim();
-    const price = document.getElementById('price').value.trim();
-    const imageInput = document.getElementById('imageInput').files[0];
-    const productType = document.getElementById('productType').value;
+// تهيئة Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-    // تحقق من أن جميع الحقول ممتلئة
-    if (!productName || !price || !imageInput) {
-        alert('يجب ملء جميع الحقول!');
-        return;
-    }
+// مفتاح API الخاص بـ imgBB (استبدله بمفتاحك الخاص)
+const IMGBB_API_KEY = "1b6a202851bd8f1860a6f253bc75bb02";
 
-    try {
-        // رفع الصورة إلى ImgBB
-        const imageUrl = await uploadImageToImgBB(imageInput);
+// دالة لرفع الصورة إلى imgBB
+const uploadImageToImgBB = async (file) => {
+  const formData = new FormData();
+  formData.append("image", file);
 
-        // إرسال البيانات إلى Firebase
-        await sendDataToFirebase(productName, price, imageUrl, productType);
-
-        alert('تمت إضافة المنتج بنجاح!');
-        clearForm();
-    } catch (error) {
-        alert('حدث خطأ أثناء إضافة المنتج!');
-        console.error('خطأ:', error);
-    }
-}
-
-// دالة لرفع الصورة إلى ImgBB
-async function uploadImageToImgBB(imageFile) {
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
+  try {
     const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-        method: 'POST',
-        body: formData
+      method: "POST",
+      body: formData,
     });
-
-    if (!response.ok) throw new Error('فشل رفع الصورة!');
 
     const data = await response.json();
-    return data.data.url; // رابط الصورة
-}
+    if (data.success) {
+      return data.data.url; // رابط الصورة المباشر
+    } else {
+      throw new Error("فشل رفع الصورة إلى imgBB");
+    }
+  } catch (error) {
+    console.error("خطأ أثناء رفع الصورة:", error);
+    alert("حدث خطأ أثناء رفع الصورة.");
+    throw error;
+  }
+};
 
-// دالة لإرسال البيانات إلى Firebase
-async function sendDataToFirebase(name, price, imageUrl, type) {
-    const productData = {
-        name,
-        price,
-        imageUrl,
-        type
+// دالة لإضافة المنتج إلى Firebase
+const addProductToFirebase = async (product) => {
+  try {
+    await db.ref("products").push(product);
+    alert("✅ تم إضافة المنتج بنجاح!");
+  } catch (error) {
+    console.error("خطأ أثناء إرسال المنتج إلى Firebase:", error);
+    alert("❌ فشل إرسال المنتج!");
+  }
+};
+
+// التعامل مع الفورم عند الإرسال
+document.getElementById("productForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // قراءة البيانات من النموذج
+  const name = document.getElementById("productName").value;
+  const price = document.getElementById("productPrice").value;
+  const category = document.getElementById("productCategory").value;
+  const imageFile = document.getElementById("productImage").files[0];
+
+  if (!imageFile) {
+    alert("يرجى اختيار صورة المنتج.");
+    return;
+  }
+
+  try {
+    // رفع الصورة إلى imgBB والحصول على الرابط
+    const imageUrl = await uploadImageToImgBB(imageFile);
+
+    // تحضير بيانات المنتج
+    const product = {
+      name,
+      price,
+      category,
+      imageUrl, // رابط الصورة
     };
 
-    const response = await fetch(FIREBASE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productData)
-    });
+    // إرسال المنتج إلى Firebase
+    await addProductToFirebase(product);
 
-    if (!response.ok) throw new Error('فشل إرسال البيانات إلى Firebase!');
-}
-
-// دالة لتفريغ النموذج
-function clearForm() {
-    document.getElementById('productName').value = '';
-    document.getElementById('price').value = '';
-    document.getElementById('imageInput').value = '';
-    document.getElementById('productType').selectedIndex = 0;
-}
+    // تفريغ الفورم بعد الإرسال
+    document.getElementById("productForm").reset();
+  } catch (error) {
+    console.error("خطأ شامل:", error);
+    alert("❌ حدث خطأ أثناء معالجة المنتج.");
+  }
+});
