@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Admin Panel</title>
 </head>
-
 <body>
     <h1>إضافة منتج جديد</h1>
     <form id="productForm">
@@ -12,19 +10,17 @@
         <label>السعر: <input type="number" id="productPrice" required></label><br>
         <label>رابط الصورة: <input type="text" id="productImage" required></label><br>
         <label>نوع المنتج: 
-    <select id="productType">
-        <option value="Necklace">Necklace</option>
-        <option value="Bracelet">Bracelet</option>
-        <option value="Ring">Ring</option>
-    </select>
-</label><br>
-
+            <select id="productType">
+                <option value="Necklace">Necklace</option>
+                <option value="Bracelet">Bracelet</option>
+                <option value="Ring">Ring</option>
+            </select>
+        </label><br>
         <button type="submit">إضافة المنتج</button>
     </form>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
-    <script src="admin.js"></script>
+    <script type="module" src="admin.js"></script>
 </body>
-
 </html>
