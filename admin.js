@@ -1,50 +1,54 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+// ✅ تحميل الصورة إلى Firebase Storage
+function uploadImageAndGetURL(file) {
+    return new Promise((resolve, reject) => {
+        const storageRef = firebase.storage().ref('images/' + file.name);
+        const uploadTask = storageRef.put(file);
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
-    authDomain: "dora-store.firebaseapp.com",
-    databaseURL: "https://dora-store-default-rtdb.firebaseio.com",
-    projectId: "dora-store",
-    storageBucket: "dora-store.appspot.com",
-    messagingSenderId: "331430680486",
-    appId: "1:331430680486:web:bf9c5880015fde63496167",
-    measurementId: "G-YF9G38JB8V"
-};
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                // تقدم التحميل (اختياري)
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+            },
+            (error) => reject(error),
+            async () => {
+                // بعد اكتمال التحميل، نحصل على الرابط
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                resolve(downloadURL);
+            }
+        );
+    });
+}
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-// التحقق من الاتصال بقاعدة البيانات
-const connectedRef = ref(db, ".info/connected");
-onValue(connectedRef, (snapshot) => {
-    if (snapshot.val() === true) {
-        console.log("✅ متصل بقاعدة البيانات");
-    } else {
-        console.error("❌ غير متصل بقاعدة البيانات");
-    }
-});
-
-// إضافة منتج
-const form = document.getElementById("productForm");
-
-form.addEventListener("submit", (e) => {
+// ✅ التأكد من ملء جميع الحقول وإرسال المنتج
+document.getElementById('productForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const name = document.getElementById("productName").value;
-    const price = document.getElementById("productPrice").value;
-    const image = document.getElementById("productImage").value;
-    const type = document.getElementById("productType").value;
+    const productName = document.getElementById('productName').value.trim();
+    const productPrice = document.getElementById('productPrice').value.trim();
+    const productType = document.getElementById('productType').value;
+    const imageFile = document.getElementById('productImage').files[0];
 
-    push(ref(db, "products"), {
-        name: name,
-        price: price,
-        image: image,
-        type: type
-    }).then(() => {
-        alert("تمت إضافة المنتج بنجاح!");
-        form.reset();
-    }).catch((error) => {
-        console.error("Error adding product: ", error);
-    });
+    if (!productName || !productPrice || !imageFile) {
+        alert('يجب ملء جميع الحقول!');
+        return;
+    }
+
+    try {
+        const imageUrl = await uploadImageAndGetURL(imageFile);
+
+        // إرسال البيانات إلى Realtime Database
+        firebase.database().ref('products').push({
+            name: productName,
+            price: productPrice,
+            type: productType,
+            imageUrl: imageUrl
+        });
+
+        alert('تمت إضافة المنتج بنجاح!');
+        document.getElementById('productForm').reset(); // إعادة تعيين النموذج
+    } catch (error) {
+        console.error('حدث خطأ أثناء تحميل الصورة:', error);
+        alert('حدث خطأ أثناء تحميل الصورة!');
+    }
 });
