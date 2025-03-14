@@ -53,48 +53,39 @@ setInterval(() => {
 /** --------- products ----------- */
 const pro = document.querySelectorAll(".pro-container")[0];
 const filter = document.querySelectorAll(".filter-btn");
+const firebaseConfig = {
+    apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
+    authDomain: "dora-store.firebaseapp.com",
+    databaseURL: "https://dora-store-default-rtdb.firebaseio.com",
+    projectId: "dora-store",
+    storageBucket: "dora-store.firebasestorage.app",
+    messagingSenderId: "331430680486",
+    appId: "1:331430680486:web:bf9c5880015fde63496167",
+    measurementId: "G-YF9G38JB8V"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-function requestAndBuild(string) {
-  const apiUrl = "API/products.json";
+// تحميل المنتجات من Firebase
+function requestAndBuild() {
+    const pro = document.querySelector(".pro-container");
+    pro.innerHTML = "";
 
-  fetch(apiUrl)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Failed to load API file");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      let filteredData = data;
-      if (string) {
-        const query = new URLSearchParams(string);
-        filteredData = data.filter((item) =>
-          Object.entries(Object.fromEntries(query)).every(
-            ([key, value]) => item[key] === value
-          )
-        );
-      }
-
-      pro.innerHTML = "";
-      filteredData.forEach((element) => {
+    db.ref("products").on("child_added", (snapshot) => {
+        const item = snapshot.val();
         let div = document.createElement("div");
         div.classList.add("pro");
         div.innerHTML = `
-         <img src="${element.img}" alt="" onclick="clicked(${element.id})">
-         <div style="display: flex; justify-content: space-between; align-items: center;">
-  <h5 style="margin: 0; font-size: 1rem; color: #333;">${element.name}</h5>
-  <h4 style="margin: 0; font-size: 1.2rem; color: #007bff;">$${element.price}</h4>
-</div>
+            <img src="${item.image}" alt="${item.name}">
+            <h5>${item.name}</h5>
+            <h4>${item.price} جنيه</h4>
         `;
         pro.appendChild(div);
-      });
-    })
-    .catch((error) => {
-      console.error("Error fetching the API:", error);
     });
 }
 
-requestAndBuild("");
+requestAndBuild();
+
 
 filter[0].addEventListener("click", function () {
   requestAndBuild("");
