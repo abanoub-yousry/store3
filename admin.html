@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
+
 <head>
     <title>Admin Panel</title>
 </head>
+
 <body>
     <h1>إضافة منتج جديد</h1>
     <form id="productForm">
         <label>اسم المنتج: <input type="text" id="productName" required></label><br>
         <label>السعر: <input type="number" id="productPrice" required></label><br>
         <label>رابط الصورة: <input type="text" id="productImage" required readonly></label><br>
-        <label>رفع صورة: <input type="file" id="imageUpload" accept="image/*"></label><br>
-        <label>نوع المنتج: 
+        <label>رفع الصورة: <input type="file" id="imageUpload"></label><br>
+        <label>نوع المنتج:
             <select id="productType">
                 <option value="Necklace">Necklace</option>
                 <option value="Bracelet">Bracelet</option>
@@ -20,34 +22,70 @@
         <button type="submit">إضافة المنتج</button>
     </form>
 
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js"></script>
-    <script type="module">
-        // إعداد Firebase
+    <!-- ✅ استخدم نسخ Non-Module (SDK v8) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <script>
+        // ✅ إعداد Firebase
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "YOUR_DATABASE_URL",
-            storageBucket: "YOUR_STORAGE_BUCKET"
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            databaseURL: "YOUR_DATABASE_URL"
         };
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
+
+        // ✅ المراجع (Database & Storage)
         const database = firebase.database();
         const storage = firebase.storage();
 
-        // رفع الصورة وتحديث الرابط
-        document.getElementById('imageUpload').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+        const form = document.getElementById('productForm');
+        const imageInput = document.getElementById('imageUpload');
 
-            const storageRef = storage.ref(`images/${file.name}`);
-            storageRef.put(file).then(snapshot => {
-                snapshot.ref.getDownloadURL().then(url => {
+        // ✅ رفع الصورة وتحديث الرابط
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const storageRef = storage.ref('products/' + file.name);
+                storageRef.put(file).then(snapshot => {
+                    return snapshot.ref.getDownloadURL();
+                }).then(url => {
                     document.getElementById('productImage').value = url;
-                    alert("تم رفع الصورة بنجاح!");
-                });
-            }).catch(error => alert("خطأ أثناء رفع الصورة: " + error.message));
+                    alert('تم رفع الصورة بنجاح!');
+                }).catch(error => console.error('خطأ أثناء رفع الصورة:', error));
+            }
+        });
+
+        // ✅ إرسال البيانات إلى Realtime Database
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const imageUrl = document.getElementById('productImage').value;
+            const type = document.getElementById('productType').value;
+
+            if (!name || !price || !imageUrl) {
+                alert('يجب ملء جميع الحقول!');
+                return;
+            }
+
+            const newProductRef = database.ref('products').push();
+            newProductRef.set({
+                name,
+                price,
+                imageUrl,
+                type
+            }).then(() => {
+                alert('تمت إضافة المنتج بنجاح!');
+                form.reset();
+            }).catch(error => console.error('خطأ أثناء إضافة المنتج:', error));
         });
     </script>
 </body>
+
 </html>
