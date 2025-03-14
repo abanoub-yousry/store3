@@ -28,6 +28,7 @@ async function requestAndBuild(category = "all") {
 
     querySnapshot.forEach((doc) => {
         const product = doc.data();
+        console.log(product); // تحقق من البيانات
         createProductCard(product);
     });
 }
@@ -37,7 +38,7 @@ function createProductCard(product) {
 
     const productHTML = `
         <div class="pro">
-            <img src="${imageURL}" alt="${title}">
+            <img src="${imageURL}" alt="${title}" onerror="this.src='placeholder-image.jpg';">
             <div class="description">
                 <h3>${title}</h3>
                 <h4>${category}</h4>
