@@ -6,7 +6,7 @@ import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebas
 const firebaseConfig = {
     apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
     authDomain: "dora-store.firebaseapp.com",
-    databaseURL: "https://dora-store-default-rtdb.firebaseio.com",
+    databaseURL: "https://dora-store-default-rtdb.firebaseio.com/",
     projectId: "dora-store",
     storageBucket: "dora-store.firebasestorage.app",
     messagingSenderId: "331430680486",
