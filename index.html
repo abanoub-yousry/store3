@@ -12,22 +12,18 @@
 <body>
     <!-- Header section -->
     <section id="header">
-        <a href="#"><img class="logo1" src="Screenshot 2024-12-02 213354.png" class="logo" alt=""></a>
-      
+        <a href="#"><img class="logo1" src="logo.png" alt="Dora Store Logo"></a>
+
         <div class="nav-links">
             <ul id="navbar">
                 <li><a class='active' href="index.html">Home</a></li>
                 <a href="#" id="close"><i class="fas fa-times"></i></a>
             </ul>
         </div>
-        <div id="mobile">
-            <i id="bar" class="fas fa-outdent"></i>
-        </div>
 
         <div id="cart-section">
             <h2 class="cart-title">Your Cart</h2>
-            <div id="cart-content">
-            </div>
+            <div id="cart-content"></div>
             <div id="amount">
                 <h3 id="total">Total</h3>
                 <h3 id="total-amount">0</h3>
@@ -39,19 +35,10 @@
 
     <!-- Hero section -->
     <section id="hero">
-        <h2>Super sale</h2>
+        <h2>Super Sale</h2>
         <h1>On all products</h1>
-        <p style="color: black;">Save more than 70% </p>
+        <p>Save more than 70%</p>
         <a href="#product1"><button>Shop Now</button></a>
-    </section>
-
-    <!-- Slider section -->
-    <section id="slider">
-        <h1 style="color: black;">We sell everything</h1>
-        <h4 style="color: black;">Take an idea and buy a reel</h4>
-        <div id='overlay' class='overlay'>
-            <img src="img/Slider/1.jpg" id='overlay-img' class='overlay-img' /><span class='prev'>&lt;</span><span class='next'>&gt;</span>
-        </div>
     </section>
 
     <!-- Products section -->
@@ -59,13 +46,10 @@
         <div class="filter-buttons">
             <button class="filter-btn all-btn">All</button>
             <button class="filter-btn Necklace-btn">Necklace</button>
-            <button class="filter-btn Anklet-btn">Anklet</button>
             <button class="filter-btn Ring-btn">Ring</button>
-            <button class="filter-btn Earring-btn">Earring</button>
-            <button class="filter-btn Bracelet-btn">Bracelet</button> 
         </div>
         <div class="pro-container">
-            <!-- المنتجات سيتم إضافتها هنا عبر JavaScript -->
+            <!-- المنتجات ستُضاف هنا ديناميكيًا -->
         </div>
     </section>
 
@@ -73,24 +57,20 @@
     <footer class="section-p1">
         <div class="col">
             <h4>Contact</h4>
-            <p><strong>Address:</strong> ismailia </p>
+            <p><strong>Address:</strong> Ismailia</p>
             <p><strong>Phone:</strong> 01094146311</p>
-            <p><strong>Hours:</strong> all day</p>
         </div>
 
         <div class="col">
             <h4>Follow Us</h4>
-            <div class="icon">
-                <a href="https://www.instagram.com/dora_store523?igsh=MTZ3ejk0Y2FuY2xhNA==" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
+            <a href="https://www.instagram.com/dora_store523" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
         </div>
     </footer>
 
-    <button onclick="scrollToTop()" id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="main.js"></script>
+    <script src="main.js" type="module"></script>
 </body>
 
 </html>
