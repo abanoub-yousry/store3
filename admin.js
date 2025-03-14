@@ -1,54 +1,62 @@
-// ✅ تحميل الصورة إلى Firebase Storage
-function uploadImageAndGetURL(file) {
-    return new Promise((resolve, reject) => {
-        const storageRef = firebase.storage().ref('images/' + file.name);
-        const uploadTask = storageRef.put(file);
+// ✅ استيراد Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
 
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                // تقدم التحميل (اختياري)
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-            },
-            (error) => reject(error),
-            async () => {
-                // بعد اكتمال التحميل، نحصل على الرابط
-                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-                resolve(downloadURL);
-            }
-        );
-    });
-}
+// ✅ بيانات التهيئة (غيرها ببيانات مشروعك من Firebase Console)
+const firebaseConfig = {
+    apiKey: "API_KEY",
+    authDomain: "your-project-id.firebaseapp.com",
+    databaseURL: "https://your-project-id.firebaseio.com",
+    projectId: "your-project-id",
+    storageBucket: "your-project-id.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
+};
 
-// ✅ التأكد من ملء جميع الحقول وإرسال المنتج
-document.getElementById('productForm').addEventListener('submit', async function (e) {
+// ✅ تهيئة Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const storage = getStorage(app);
+
+// ✅ التعامل مع النموذج
+const productForm = document.getElementById('productForm');
+
+productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const productName = document.getElementById('productName').value.trim();
-    const productPrice = document.getElementById('productPrice').value.trim();
+    // جمع البيانات من النموذج
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
     const productType = document.getElementById('productType').value;
-    const imageFile = document.getElementById('productImage').files[0];
+    const productImage = document.getElementById('productImage').files[0];
 
-    if (!productName || !productPrice || !imageFile) {
-        alert('يجب ملء جميع الحقول!');
+    if (!productName || !productPrice || !productType || !productImage) {
+        alert("يجب ملء جميع الحقول!");
         return;
     }
 
     try {
-        const imageUrl = await uploadImageAndGetURL(imageFile);
+        // ✅ رفع الصورة إلى Firebase Storage
+        const imageRef = storageRef(storage, `products/${Date.now()}_${productImage.name}`);
+        await uploadBytes(imageRef, productImage);
 
-        // إرسال البيانات إلى Realtime Database
-        firebase.database().ref('products').push({
+        // ✅ الحصول على رابط الصورة
+        const imageUrl = await getDownloadURL(imageRef);
+
+        // ✅ تخزين البيانات في Firebase Realtime Database
+        const productRef = ref(database, 'products');
+        await push(productRef, {
             name: productName,
             price: productPrice,
             type: productType,
             imageUrl: imageUrl
         });
 
-        alert('تمت إضافة المنتج بنجاح!');
-        document.getElementById('productForm').reset(); // إعادة تعيين النموذج
+        alert("تمت إضافة المنتج بنجاح!");
+        productForm.reset();
     } catch (error) {
-        console.error('حدث خطأ أثناء تحميل الصورة:', error);
-        alert('حدث خطأ أثناء تحميل الصورة!');
+        console.error("حدث خطأ أثناء رفع المنتج: ", error);
+        alert("فشل في إضافة المنتج!");
     }
 });
