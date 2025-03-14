@@ -29,19 +29,16 @@ const firebaseConfig = {
         const productList = document.getElementById("productList");
 
         // جلب المنتجات
-        db.ref("products").on("value", (snapshot) => {
-            productList.innerHTML = "";
-            snapshot.forEach((product) => {
-                const item = product.val();
-                productList.innerHTML += `
-                    <div>
-                        <h3>${item.name}</h3>
-                        <p>السعر: ${item.price} جنيه</p>
-                        <img src="${item.image}" width="150" />
-                    </div>
-                    <hr>`;
-            });
-        });
+db.ref("products").on("child_added", (snapshot) => {
+    const item = snapshot.val();
+    productList.innerHTML += `
+        <div style="border:1px solid #ccc; padding:10px; margin:10px; border-radius:10px;">
+            <h3>${item.name}</h3>
+            <p>السعر: ${item.price} جنيه</p>
+            <img src="${item.image}" width="150" alt="${item.name}" />
+        </div>
+    `;
+});
     </script>
 
 </body>
