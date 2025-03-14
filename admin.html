@@ -2,28 +2,27 @@
 <html lang="ar">
 
 <head>
-    <title>لوحة التحكم - إضافة منتج</title>
     <meta charset="UTF-8">
+    <title>إضافة منتج جديد</title>
 </head>
 
 <body>
-    <h1>إضافة منتج جديد</h1>
-    <form id="productForm">
-        <label>اسم المنتج: <input type="text" id="productName" required></label><br>
-        <label>السعر: <input type="number" id="productPrice" required></label><br>
-        <label>رفع الصورة: <input type="file" id="productImage" accept="image/*" required></label><br>
-        <label>نوع المنتج:
-            <select id="productType">
-                <option value="Necklace">Necklace</option>
-                <option value="Bracelet">Bracelet</option>
-                <option value="Ring">Ring</option>
-            </select>
-        </label><br>
-        <button type="submit">إضافة المنتج</button>
-    </form>
+    <h2>إضافة منتج جديد</h2>
 
-    <!-- ربط ملف الجافاسكربت -->
-    <script type="module" src="admin.js"></script>
+    <label>اسم المنتج: <input type="text" id="productName"></label><br><br>
+    <label>السعر: <input type="number" id="price"></label><br><br>
+    <label>رفع الصورة: <input type="file" id="imageInput"></label><br><br>
+    <label>نوع المنتج: 
+        <select id="productType">
+            <option value="Necklace">Necklace</option>
+            <option value="Ring">Ring</option>
+            <option value="Bracelet">Bracelet</option>
+        </select>
+    </label><br><br>
+
+    <button onclick="addProduct()">إضافة المنتج</button>
+
+    <script src="admin.js"></script>
 </body>
 
 </html>
