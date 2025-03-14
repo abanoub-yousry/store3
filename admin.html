@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
-    <title>Admin Panel</title>
+    <title>لوحة التحكم - إضافة منتج</title>
+    <meta charset="UTF-8">
 </head>
 
 <body>
@@ -10,8 +11,7 @@
     <form id="productForm">
         <label>اسم المنتج: <input type="text" id="productName" required></label><br>
         <label>السعر: <input type="number" id="productPrice" required></label><br>
-        <label>رابط الصورة: <input type="text" id="productImage" required readonly></label><br>
-        <label>رفع الصورة: <input type="file" id="imageUpload"></label><br>
+        <label>رفع الصورة: <input type="file" id="productImage" accept="image/*" required></label><br>
         <label>نوع المنتج:
             <select id="productType">
                 <option value="Necklace">Necklace</option>
@@ -22,71 +22,8 @@
         <button type="submit">إضافة المنتج</button>
     </form>
 
-    <!-- ✅ استخدم نسخ Non-Module (SDK v8) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
-    <script>
-        // ✅ إعداد Firebase
- const firebaseConfig = {
-    apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
-    authDomain: "dora-store.firebaseapp.com",
-    databaseURL: "https://dora-store-default-rtdb.firebaseio.com",
-    projectId: "dora-store",
-    storageBucket: "dora-store.appspot.com",
-    messagingSenderId: "331430680486",
-    appId: "1:331430680486:web:bf9c5880015fde63496167",
-    measurementId: "G-YF9G38JB8V"
-};
-        firebase.initializeApp(firebaseConfig);
-
-        // ✅ المراجع (Database & Storage)
-        const database = firebase.database();
-        const storage = firebase.storage();
-
-        const form = document.getElementById('productForm');
-        const imageInput = document.getElementById('imageUpload');
-
-        // ✅ رفع الصورة وتحديث الرابط
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const storageRef = storage.ref('products/' + file.name);
-                storageRef.put(file).then(snapshot => {
-                    return snapshot.ref.getDownloadURL();
-                }).then(url => {
-                    document.getElementById('productImage').value = url;
-                    alert('تم رفع الصورة بنجاح!');
-                }).catch(error => console.error('خطأ أثناء رفع الصورة:', error));
-            }
-        });
-
-        // ✅ إرسال البيانات إلى Realtime Database
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('productName').value;
-            const price = document.getElementById('productPrice').value;
-            const imageUrl = document.getElementById('productImage').value;
-            const type = document.getElementById('productType').value;
-
-            if (!name || !price || !imageUrl) {
-                alert('يجب ملء جميع الحقول!');
-                return;
-            }
-
-            const newProductRef = database.ref('products').push();
-            newProductRef.set({
-                name,
-                price,
-                imageUrl,
-                type
-            }).then(() => {
-                alert('تمت إضافة المنتج بنجاح!');
-                form.reset();
-            }).catch(error => console.error('خطأ أثناء إضافة المنتج:', error));
-        });
-    </script>
+    <!-- ربط ملف الجافاسكربت -->
+    <script type="module" src="admin.js"></script>
 </body>
 
 </html>
