@@ -1,62 +1,73 @@
-// ✅ استيراد Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+// إعدادات
+const IMGBB_API_KEY = 'ضع_مفتاح_ImgBB_هنا';
+const FIREBASE_URL = 'https://your-firebase-url.firebaseio.com/products.json';
 
-// ✅ بيانات التهيئة (غيرها ببيانات مشروعك من Firebase Console)
-const firebaseConfig = {
-    apiKey: "API_KEY",
-    authDomain: "your-project-id.firebaseapp.com",
-    databaseURL: "https://your-project-id.firebaseio.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project-id.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
-};
-
-// ✅ تهيئة Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const storage = getStorage(app);
-
-// ✅ التعامل مع النموذج
-const productForm = document.getElementById('productForm');
-
-productForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // جمع البيانات من النموذج
-    const productName = document.getElementById('productName').value;
-    const productPrice = document.getElementById('productPrice').value;
+// دالة لإضافة المنتج
+async function addProduct() {
+    const productName = document.getElementById('productName').value.trim();
+    const price = document.getElementById('price').value.trim();
+    const imageInput = document.getElementById('imageInput').files[0];
     const productType = document.getElementById('productType').value;
-    const productImage = document.getElementById('productImage').files[0];
 
-    if (!productName || !productPrice || !productType || !productImage) {
-        alert("يجب ملء جميع الحقول!");
+    // تحقق من أن جميع الحقول ممتلئة
+    if (!productName || !price || !imageInput) {
+        alert('يجب ملء جميع الحقول!');
         return;
     }
 
     try {
-        // ✅ رفع الصورة إلى Firebase Storage
-        const imageRef = storageRef(storage, `products/${Date.now()}_${productImage.name}`);
-        await uploadBytes(imageRef, productImage);
+        // رفع الصورة إلى ImgBB
+        const imageUrl = await uploadImageToImgBB(imageInput);
 
-        // ✅ الحصول على رابط الصورة
-        const imageUrl = await getDownloadURL(imageRef);
+        // إرسال البيانات إلى Firebase
+        await sendDataToFirebase(productName, price, imageUrl, productType);
 
-        // ✅ تخزين البيانات في Firebase Realtime Database
-        const productRef = ref(database, 'products');
-        await push(productRef, {
-            name: productName,
-            price: productPrice,
-            type: productType,
-            imageUrl: imageUrl
-        });
-
-        alert("تمت إضافة المنتج بنجاح!");
-        productForm.reset();
+        alert('تمت إضافة المنتج بنجاح!');
+        clearForm();
     } catch (error) {
-        console.error("حدث خطأ أثناء رفع المنتج: ", error);
-        alert("فشل في إضافة المنتج!");
+        alert('حدث خطأ أثناء إضافة المنتج!');
+        console.error('خطأ:', error);
     }
-});
+}
+
+// دالة لرفع الصورة إلى ImgBB
+async function uploadImageToImgBB(imageFile) {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) throw new Error('فشل رفع الصورة!');
+
+    const data = await response.json();
+    return data.data.url; // رابط الصورة
+}
+
+// دالة لإرسال البيانات إلى Firebase
+async function sendDataToFirebase(name, price, imageUrl, type) {
+    const productData = {
+        name,
+        price,
+        imageUrl,
+        type
+    };
+
+    const response = await fetch(FIREBASE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData)
+    });
+
+    if (!response.ok) throw new Error('فشل إرسال البيانات إلى Firebase!');
+}
+
+// دالة لتفريغ النموذج
+function clearForm() {
+    document.getElementById('productName').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('imageInput').value = '';
+    document.getElementById('productType').selectedIndex = 0;
+}
