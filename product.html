@@ -2,147 +2,47 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .pro-detail {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        #product-img {
-            height: 300px;
-        }
-
-        .pro-detail .des {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .pro-detail .des h4 {
-            font-weight: 700;
-            font-size: 18px;
-            color: #088178;
-        }
-
-        .pro-detail .des h5 {
-            font-weight: 600;
-            font-size: 21px;
-            color: #1a1a1a;
-        }
-
-        .pro-detail .des span {
-            font-weight: 600;
-            font-size: 17px;
-        }
-
-        .pro-detail .des p {
-            text-align: center;
-        }
-    </style>
+    <title>Products</title>
 </head>
 
 <body>
-  <!-- Header section -->
-  <section id="header">
-    <a href="#"><img  class="logo1" src="Screenshot 2024-12-02 213354.png" class="logo" alt=""></a>
- 
-    <div class="nav-links">
-        <ul id="navbar">
-            <li><a class='active' href="index.html">Home</a></li>
-            <!-- <li><a href="about.html" target="_blank">About</a></li>
-            <li><a href="contact.html" target="_blank">Contact Us</a></li>
-            <li><a href="form.html" >Sign in</a></li>
-            <li id="lg-bag">
-                <a id="cart-icon"><i class="fa-solid fa-bag-shopping icon"></i></a>
-                <span id="cart-counter">0</span>
-            </li>
-            <a href="#" id="close"><i class="fas fa-times"></i></a> -->
-        </ul>
-    </div>
-    <div id="mobile">
-        <i id="bar" class="fas fa-outdent"></i>
-    </div>
+    <h1>المنتجات</h1>
+    <div id="productList"></div>
 
-    <div id="cart-section">
-        <h2 class="cart-title">Your Cart</h2>
-        <div id="cart-content">
-        </div>
-        <div id="amount">
-            <h3 id="total">Total</h3>
-            <h3 id="total-amount">0</h3>
-        </div>
-        <button id="checkout">Checkout</button>
-        <i class="fa-solid fa-xmark" id="close-cart"></i>
-    </div>
-</section>
-
-    <!-- Product section -->
-    <section id="product-detail" class="section-p1">
-        <div class="pro-container">
-            <div class="pro-detail">
-                <img src="" alt="" id="product-img">
-                <div class="des">
-                    <!-- <span id="brand"></span> -->
-                    <h5 id="name"></h5>
-                    <h4 id="price"></h4>
-                    <!-- <p id="par"></p> -->
-                    <!-- <button id="checkout">Checkout</button>
-                    <button id="checkout">Checkout</button> -->
-                    <button id="share-button" href="javascript:void(0)">Order the product via WhatsApp</button>
-                    <!-- <button id="share-button2" href="javascript:void(0)">Order the product via instagram</button> -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+    <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDsN3Nlx3TVxz4zrvY06NX9RR2DTVDCREU",
+  authDomain: "dora-store.firebaseapp.com",
+  projectId: "dora-store",
+  storageBucket: "dora-store.firebasestorage.app",
+  messagingSenderId: "331430680486",
+  appId: "1:331430680486:web:bf9c5880015fde63496167",
+  measurementId: "G-YF9G38JB8V"
+};
 
 
-                </div>
-            </div>
-        </div>
-    </section>
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-    <!-- footer -->
-    <footer class="section-p1">
-        <div class="col">
-           
-            <h4>Contact</h4>
-            <p><strong>Address:</strong> ismailia </p>
-            <p><strong>Phone:</strong> 01094146311</p>
-            <p><strong>Hours:</strong> all day</p>
-           
-        </div>
+        const productList = document.getElementById("productList");
 
-        <div class="col">
-           
-            <!-- <div class="follow"> -->
-                <h4>Follow Us</h4>
-                <div class="icon" >
-                  <!-- رابط الفيسبوك -->
-                  <!-- <a href="https://www.facebook.com/your_facebook_page" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-facebook-f"></i>
-                  </a> -->
-              
-                  <!-- رابط الإنستغرام -->
-                  <a href="https://www.instagram.com/dora_store523?igsh=MTZ3ejk0Y2FuY2xhNA==" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-instagram"></i>
-                  </a>
-                </div>
-              </div>
-              
-        </div>
-
-    <button onclick="scrollToTop()" id="scrollToTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
-
-    <script src="script/prod.js"></script>
-    <!-- <script src="main.js"></script> -->
+        // جلب المنتجات
+        db.ref("products").on("value", (snapshot) => {
+            productList.innerHTML = "";
+            snapshot.forEach((product) => {
+                const item = product.val();
+                productList.innerHTML += `
+                    <div>
+                        <h3>${item.name}</h3>
+                        <p>السعر: ${item.price} جنيه</p>
+                        <img src="${item.image}" width="150" />
+                    </div>
+                    <hr>`;
+            });
+        });
+    </script>
 
 </body>
 
